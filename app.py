@@ -77,7 +77,7 @@ disk_total_gb {disk_total:.2f}
 # TYPE disk_usage_percent gauge
 disk_usage_percent {disk_percent}
 """
-     return metric_text, 200, {'Content-Type': 'text/plain; charset=utf-8'}
+    return metric_text, 200, {'Content-Type': 'text/plain; charset=utf-8'}
 
 @app.route("/health")
 def health():

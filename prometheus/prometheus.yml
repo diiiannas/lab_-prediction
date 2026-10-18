@@ -7,4 +7,14 @@ scrape_configs:
     scheme: 'https'
     static_configs:
       - targets: ['lab-prediction.onrender.com']
-      #sssssssssss
+
+  - job_name: 'flask_app_resources'
+    metrics_path: '/metrics/resources'
+    scheme: 'https'
+    static_configs:
+      - targets: ['lab-prediction.onrender.com']
+  - job_name: 'flask_app_health'
+    metrics_path: '/health'
+    scheme: 'https'
+    static_configs:
+      - targets: ['lab-prediction.onrender.com']

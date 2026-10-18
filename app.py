@@ -3,7 +3,7 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-vsego_predskazaniy = 0
+posesheniya = 0
 
 ANSWERS = [
     "Определённо да",
@@ -16,24 +16,21 @@ ANSWERS = [
 
 @app.route("/", methods=["GET"])
 def index():
+    global posesheniya
+    posesheniya += 1
     return render_template("index.html")
 
 @app.route("/predict", methods=["POST"])
 def predict():
-    global vsego_predskazaniy
-    
     question = request.form.get("question", "").strip()
     answer = random.choice(ANSWERS)
-    
-    vsego_predskazaniy += 1
-    
     return render_template("index.html", question=question, answer=answer)
 
 @app.route("/metrics")
 def metrics():
-    metric_text = "# HELP vsego_predskazaniy Total predictions\n"
-    metric_text += "# TYPE vsego_predskazaniy counter\n"
-    metric_text += f"vsego_predskazaniy {vsego_predskazaniy}\n"
+    metric_text = "# HELP posesheniya_total Общее количество посещений сайта\n"
+    metric_text += "# TYPE posesheniya_total counter\n"
+    metric_text += f"posesheniya_total {posesheniya}\n"
     return metric_text, 200, {'Content-Type': 'text/plain; charset=utf-8'}
 
 @app.route("/health")

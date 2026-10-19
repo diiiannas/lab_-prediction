@@ -15,9 +15,10 @@ docker build -t prediction .
 
 docker run -p 5000:5000 prediction
 
-После чего сайт открывается в браузере по первой ссылке, которая выводится в терминале (рисунок 1)
+После чего сайт открывается в браузере по первой ссылке, которая выводится в терминале
 
 <img width="1268" height="657" alt="image" src="https://github.com/user-attachments/assets/38c6bc7c-c4e5-4ab3-895f-42c1a3b4dcd7" />
+
 
 Чтобы настроить мониторинг были созданы файлы prometheus.yml и docker-compose.yml.
 
@@ -43,14 +44,17 @@ http://localhost:9090 , вводим vsego_predskazaniy и получаем ме
 
 <img width="1918" height="865" alt="image" src="https://github.com/user-attachments/assets/1f0bbac2-3549-44b1-acbd-faa2bb37ba6e" />
 
+
 http://localhost:3000 - Grafana
 Настраиваем коннект с prometheus и создаем dashboard для "количества предсказаний"
 
 <img width="1299" height="716" alt="image" src="https://github.com/user-attachments/assets/80bb4346-be52-40f7-975c-f032529df42a" />
 
+
 http://localhost:9100 - cadvisor (отслеживает cpu)
 
 <img width="746" height="978" alt="image" src="https://github.com/user-attachments/assets/5565cc4d-8d85-485a-ac87-d49c95704d34" />
+
 
 ## CI/CD Pipeline
 
@@ -76,6 +80,7 @@ GitHub Actions скачивает актуальную версию репози
 
 Если все предыдущие шаги прошли успешно, скрипт отправляет HTTP POST-запрос по защищенному URL, который хранится в GitHub Secrets.
 
+
 ## Деплой на Render
 
 Был создан аккаунт на платформе Render.com с авторизацией через GitHub
@@ -83,6 +88,7 @@ GitHub Actions скачивает актуальную версию репози
 Render получил доступ к репозиторию, что позволило автоматически отслеживать изменения в коде
 
 Платформа автоматически выполнила сборку Docker-образа из репозитория и запустила контейнер. После успешного деплоя приложению был присвоен уникальный домен.
+
 
 <img width="954" height="1017" alt="image" src="https://github.com/user-attachments/assets/d9496a8b-6606-4872-a71a-65b9550d8757" />
 
@@ -113,8 +119,15 @@ Render получил доступ к репозиторию, что позво�
 Метрики ресурсов (CPU, memory, диск) отражают показатели всей хост-машины Render, а не изолированного контейнера приложения.
 
 Библиотека psutil внутри Docker считывает данные ядра хост-сервера, поэтому эти значения показывают совокупную нагрузку и объем диска всего сервера, а не фактическое потребление ресурсов только моим приложением.
+
  
  <img width="1890" height="1083" alt="image" src="https://github.com/user-attachments/assets/866d6a7c-7663-4fa0-809e-a711205d820f" />
+
+
+ <img width="1896" height="1071" alt="image" src="https://github.com/user-attachments/assets/569f4bb3-fa97-47bd-8b13-38203aa79b5d" />
+
+
+
 
 В ходе работы над проектом в код вносились изменения: исправление  в app.py (изначально вместо посещений шел подсчет количества действий), добавление библиотеки psutil для сбора метрик ресурсов, корректировка структуры prometheus.yml.
 
